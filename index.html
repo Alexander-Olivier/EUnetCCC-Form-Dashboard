@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 8.2.1 – Submission Portal | EUnetCCC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* EUnetCCC Brand Colors */
+            --primary: #1e3a5f;
+            --primary-dark: #152a45;
+            --primary-light: #2a4d7a;
+            --accent: #3b82c4;
+            --accent-light: #5a9bd4;
+            --teal: #0d9488;
+            --teal-light: #14b8a6;
+            
+            /* Form-specific colors */
+            --newsletter-color: #1e3a5f;
+            --newsletter-light: #3b82c4;
+            --newsletter-bg: #dbeafe;
+            
+            --website-color: #6B2D5B;
+            --website-light: #8a4275;
+            --website-bg: #fce7f3;
+            
+            --socialmedia-color: #0f766e;
+            --socialmedia-light: #14b8a6;
+            --socialmedia-bg: #ccfbf1;
+            
+            --dark: #1a1a2e;
+            --dark-secondary: #4a4a5a;
+            --light-bg: #f5f7fa;
+            --white: #ffffff;
+            --border: #d1d5db;
+            
+            --success: #059669;
+            --success-bg: #d1fae5;
+            --closed: #6b7280;
+            --closed-bg: #e5e7eb;
+            --warning: #d97706;
+            --warning-bg: #fef3c7;
+            --submitted: #0d9488;
+            --submitted-bg: #ccfbf1;
+            --draft: #7c3aed;
+            --draft-bg: #ede9fe;
+        }
+
+        html {
+            font-size: 17px;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 1.25rem 2rem;
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .logo-text {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .header-task {
+            font-size: 0.9rem;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* Main content */
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        .page-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--dark-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .notice-box {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.25rem;
+            margin-bottom: 2.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .notice-box p {
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .notice-box strong {
+            color: var(--warning);
+        }
+
+        /* Form cards grid */
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Form card */
+        .form-card {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .form-card.open:hover {
+            box-shadow: 0 4px 20px rgba(30, 58, 95, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .form-card.closed {
+            opacity: 0.85;
+        }
+
+        /* Form-type specific colors */
+        .form-card.newsletter.open .card-type {
+            color: var(--newsletter-color);
+        }
+
+        .form-card.newsletter .btn-primary {
+            background: var(--newsletter-color);
+        }
+
+        .form-card.newsletter .btn-primary:hover {
+            background: var(--newsletter-light);
+        }
+
+        .form-card.website.open .card-type {
+            color: var(--website-color);
+        }
+
+        .form-card.website .btn-primary {
+            background: var(--website-color);
+        }
+
+        .form-card.website .btn-primary:hover {
+            background: var(--website-light);
+        }
+
+        .form-card.socialmedia.open .card-type {
+            color: var(--socialmedia-color);
+        }
+
+        .form-card.socialmedia .btn-primary {
+            background: var(--socialmedia-color);
+        }
+
+        .form-card.socialmedia .btn-primary:hover {
+            background: var(--socialmedia-light);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-card.open .card-type {
+            color: var(--success);
+        }
+
+        .form-card.closed .card-type {
+            color: var(--closed);
+        }
+
+        .form-card.submitted .card-type {
+            color: var(--submitted);
+        }
+
+        .form-card.draft .card-type {
+            color: var(--draft);
+        }
+
+        .card-title {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--dark-secondary);
+        }
+
+        .card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        /* Status badge */
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.open {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status-badge.closed {
+            background: var(--closed-bg);
+            color: var(--closed);
+        }
+
+        .status-badge.submitted {
+            background: var(--submitted-bg);
+            color: var(--submitted);
+        }
+
+        .status-badge.draft {
+            background: var(--draft-bg);
+            color: var(--draft);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-badge.open .status-dot {
+            background: var(--success);
+        }
+
+        .status-badge.closed .status-dot {
+            background: var(--closed);
+        }
+
+        .status-badge.submitted .status-dot {
+            background: var(--submitted);
+        }
+
+        .status-badge.draft .status-dot {
+            background: var(--draft);
+        }
+
+        /* Deadline info */
+        .deadline-info {
+            font-size: 0.9rem;
+            color: var(--dark-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .deadline-info strong {
+            color: var(--dark);
+        }
+
+        .closed-message {
+            font-size: 0.9rem;
+            color: var(--closed);
+            line-height: 1.5;
+        }
+
+        .closed-message strong {
+            color: var(--dark-secondary);
+        }
+
+        .submitted-message {
+            font-size: 0.9rem;
+            color: var(--submitted);
+            line-height: 1.5;
+        }
+
+        .submitted-message strong {
+            color: var(--dark);
+        }
+
+        .submitted-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .submitted-info svg {
+            width: 16px;
+            height: 16px;
+            color: var(--submitted);
+            flex-shrink: 0;
+        }
+
+        .submitted-info span {
+            font-size: 0.85rem;
+            color: var(--dark-secondary);
+        }
+
+        .draft-message {
+            font-size: 0.9rem;
+            color: var(--draft);
+            line-height: 1.5;
+        }
+
+        .draft-message strong {
+            color: var(--dark);
+        }
+
+        .draft-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .draft-info svg {
+            width: 16px;
+            height: 16px;
+            color: var(--draft);
+            flex-shrink: 0;
+        }
+
+        .draft-info span {
+            font-size: 0.85rem;
+            color: var(--dark-secondary);
+        }
+
+        .btn-continue {
+            background: var(--draft);
+            color: var(--white);
+        }
+
+        .btn-continue:hover {
+            background: #6d28d9;
+        }
+
+        /* Button */
+        .card-footer {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        }
+
+        .btn-disabled {
+            background: var(--closed-bg);
+            color: var(--closed);
+            cursor: not-allowed;
+        }
+
+        .btn-submitted {
+            background: var(--submitted-bg);
+            color: var(--submitted);
+            cursor: default;
+        }
+
+        .btn-submitted svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--dark-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            html {
+                font-size: 16px;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .main {
+                padding: 1.5rem 1rem 3rem;
+            }
+
+            .page-title {
+                font-size: 1.65rem;
+            }
+
+            .forms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-mark">EU</div>
+                <span class="logo-text">EUnetCCC</span>
+            </a>
+            <span class="header-task">Task 8.2.1 Portal</span>
+        </div>
+    </header>
+
+    <main class="main">
+        <h1 class="page-title">Task 8.2.1 Submission Portal</h1>
+        <p class="page-subtitle">Submit your monthly content and materials using the forms below. Each form has its own deadline.</p>
+
+        <div class="notice-box">
+            <p><strong>Important:</strong> Please use these forms for all submissions. Do not send content via email.</p>
+        </div>
+
+        <div class="forms-grid">
+            <!-- Newsletter Form Card - OPEN -->
+            <article class="form-card open newsletter">
+                <div class="card-header">
+                    <p class="card-type">Monthly submission</p>
+                    <h2 class="card-title">Newsletter Content</h2>
+                    <p class="card-description">Updates, news, announcements, and upcoming events for the monthly newsletter.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge open">
+                            <span class="status-dot"></span>
+                            Open
+                        </span>
+                    </div>
+                    <p class="deadline-info">
+                        <strong>Due:</strong> December 20, 2025
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="newsletter-form.html" class="btn btn-primary">
+                        Open form
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Website Form Card - OPEN -->
+            <article class="form-card open website">
+                <div class="card-header">
+                    <p class="card-type">Media submission</p>
+                    <h2 class="card-title">Website Content</h2>
+                    <p class="card-description">Videos, news posts, and event listings for the EUnetCCC media page.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge open">
+                            <span class="status-dot"></span>
+                            Open
+                        </span>
+                    </div>
+                    <p class="deadline-info">
+                        <strong>Due:</strong> December 20, 2025
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="website-form.html" class="btn btn-primary">
+                        Open form
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Social Media Form Card - OPEN -->
+            <article class="form-card open socialmedia">
+                <div class="card-header">
+                    <p class="card-type">Monthly submission</p>
+                    <h2 class="card-title">Social Media Content</h2>
+                    <p class="card-description">Content for our LinkedIn, Twitter, and other social media channels.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge open">
+                            <span class="status-dot"></span>
+                            Open
+                        </span>
+                    </div>
+                    <p class="deadline-info">
+                        <strong>Due:</strong> December 20, 2025
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="socialmedia-form.html" class="btn btn-primary">
+                        Open form
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Example: SUBMITTED Form Card -->
+            <article class="form-card submitted newsletter">
+                <div class="card-header">
+                    <p class="card-type">Monthly submission</p>
+                    <h2 class="card-title">Newsletter Content</h2>
+                    <p class="card-description">Updates, news, announcements, and upcoming events for the monthly newsletter.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge submitted">
+                            <span class="status-dot"></span>
+                            Submitted
+                        </span>
+                    </div>
+                    <p class="submitted-message">
+                        Your submission for <strong>December 2025</strong> has been received.
+                    </p>
+                    <div class="submitted-info">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Submitted on December 14, 2025 at 10:32 AM</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-submitted" disabled>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Submission complete
+                    </button>
+                </div>
+            </article>
+
+            <!-- Example: DRAFT/IN PROGRESS Form Card -->
+            <article class="form-card draft website">
+                <div class="card-header">
+                    <p class="card-type">Media submission</p>
+                    <h2 class="card-title">Website Content</h2>
+                    <p class="card-description">Videos, news posts, and event listings for the EUnetCCC media page.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge draft">
+                            <span class="status-dot"></span>
+                            In progress
+                        </span>
+                    </div>
+                    <p class="draft-message">
+                        You have a saved draft for <strong>December 2025</strong>.
+                    </p>
+                    <div class="draft-info">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Last saved on December 14, 2025 at 9:15 AM</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="website-form.html" class="btn btn-continue">
+                        Continue editing
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Example: CLOSED Form Card -->
+            <article class="form-card closed newsletter">
+                <div class="card-header">
+                    <p class="card-type">Monthly submission</p>
+                    <h2 class="card-title">Newsletter Content</h2>
+                    <p class="card-description">Updates, news, announcements, and upcoming events for the monthly newsletter.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge closed">
+                            <span class="status-dot"></span>
+                            Closed
+                        </span>
+                    </div>
+                    <p class="closed-message">
+                        The <strong>Newsletter</strong> form for <strong>November 2025</strong> closed on November 20, 2025.<br><br>
+                        The form for <strong>December 2025</strong> opens on December 1, 2025.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-disabled" disabled>
+                        Submissions closed
+                    </button>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>EUnetCCC Work Package 8 – Communication &amp; Evaluation</p>
+        <p>Questions? <a href="mailto:wp8@eunetccc.eu">Contact the WP8 team</a></p>
+    </footer>
+</body>
+</html>

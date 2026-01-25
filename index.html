@@ -37,6 +37,9 @@
             --socialmedia-light: #14b8a6;
             --socialmedia-bg: #ccfbf1;
             
+            --adhoc-color: #b45309;
+            --adhoc-light: #d97706;
+            
             --dark: #1a1a2e;
             --dark-secondary: #4a4a5a;
             --light-bg: #f5f7fa;
@@ -216,6 +219,18 @@
 
         .form-card.socialmedia .btn-primary:hover {
             background: var(--socialmedia-light);
+        }
+
+        .form-card.adhoc.open .card-type {
+            color: var(--adhoc-color);
+        }
+
+        .form-card.adhoc .btn-primary {
+            background: var(--adhoc-color);
+        }
+
+        .form-card.adhoc .btn-primary:hover {
+            background: var(--adhoc-light);
         }
 
         .card-header {
@@ -622,6 +637,34 @@
                 </div>
             </article>
 
+            <!-- Ad Hoc Task Form Card - OPEN -->
+            <article class="form-card open adhoc">
+                <div class="card-header">
+                    <p class="card-type">Task request</p>
+                    <h2 class="card-title">Ad Hoc Task Request</h2>
+                    <p class="card-description">Request support from the WP8 communication team for specific tasks.</p>
+                </div>
+                <div class="card-body">
+                    <div class="status-row">
+                        <span class="status-badge open">
+                            <span class="status-dot"></span>
+                            Always open
+                        </span>
+                    </div>
+                    <p class="deadline-info">
+                        Submit anytime – allow at least 2 weeks
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="adhoc-form.html" class="btn btn-primary">
+                        New request
+                        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
             <!-- Example: SUBMITTED Form Card -->
             <article class="form-card submitted newsletter">
                 <div class="card-header">
@@ -720,7 +763,4 @@
 
     <footer class="footer">
         <p>EUnetCCC Work Package 8 – Communication &amp; Evaluation</p>
-        <p>Questions? <a href="mailto:wp8@eunetccc.eu">Contact the WP8 team</a></p>
-    </footer>
-</body>
-</html>
+        <p>Questions? <a href="/cdn-cgi/l/email-protection#7700074f371202191203141414591202">Contact the WP8 team<

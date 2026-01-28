@@ -259,7 +259,23 @@
         }
 
         .form-card.draft .card-type {
-            color: var(--draft);
+            color: var(--dark-secondary);
+        }
+
+        .form-card.draft.newsletter .card-type {
+            color: var(--newsletter-color);
+        }
+
+        .form-card.draft.website .card-type {
+            color: var(--website-color);
+        }
+
+        .form-card.draft.socialmedia .card-type {
+            color: var(--socialmedia-color);
+        }
+
+        .form-card.draft.adhoc .card-type {
+            color: var(--adhoc-color);
         }
 
         .card-title {
@@ -313,8 +329,24 @@
         }
 
         .status-badge.draft {
-            background: var(--draft-bg);
-            color: var(--draft);
+            background: transparent;
+            border: 1.5px dashed currentColor;
+        }
+
+        .form-card.newsletter .status-badge.draft {
+            color: var(--newsletter-color);
+        }
+
+        .form-card.website .status-badge.draft {
+            color: var(--website-color);
+        }
+
+        .form-card.socialmedia .status-badge.draft {
+            color: var(--socialmedia-color);
+        }
+
+        .form-card.adhoc .status-badge.draft {
+            color: var(--adhoc-color);
         }
 
         .status-dot {
@@ -336,7 +368,7 @@
         }
 
         .status-badge.draft .status-dot {
-            background: var(--draft);
+            background: currentColor;
         }
 
         /* Deadline info */
@@ -393,8 +425,23 @@
 
         .draft-message {
             font-size: 0.9rem;
-            color: var(--draft);
             line-height: 1.5;
+        }
+
+        .form-card.newsletter .draft-message {
+            color: var(--newsletter-color);
+        }
+
+        .form-card.website .draft-message {
+            color: var(--website-color);
+        }
+
+        .form-card.socialmedia .draft-message {
+            color: var(--socialmedia-color);
+        }
+
+        .form-card.adhoc .draft-message {
+            color: var(--adhoc-color);
         }
 
         .draft-message strong {
@@ -413,8 +460,23 @@
         .draft-info svg {
             width: 16px;
             height: 16px;
-            color: var(--draft);
             flex-shrink: 0;
+        }
+
+        .form-card.newsletter .draft-info svg {
+            color: var(--newsletter-color);
+        }
+
+        .form-card.website .draft-info svg {
+            color: var(--website-color);
+        }
+
+        .form-card.socialmedia .draft-info svg {
+            color: var(--socialmedia-color);
+        }
+
+        .form-card.adhoc .draft-info svg {
+            color: var(--adhoc-color);
         }
 
         .draft-info span {
@@ -423,12 +485,39 @@
         }
 
         .btn-continue {
-            background: var(--draft);
             color: var(--white);
         }
 
-        .btn-continue:hover {
-            background: #6d28d9;
+        .form-card.newsletter .btn-continue {
+            background: var(--newsletter-color);
+        }
+
+        .form-card.newsletter .btn-continue:hover {
+            background: var(--newsletter-light);
+        }
+
+        .form-card.website .btn-continue {
+            background: var(--website-color);
+        }
+
+        .form-card.website .btn-continue:hover {
+            background: var(--website-light);
+        }
+
+        .form-card.socialmedia .btn-continue {
+            background: var(--socialmedia-color);
+        }
+
+        .form-card.socialmedia .btn-continue:hover {
+            background: var(--socialmedia-light);
+        }
+
+        .form-card.adhoc .btn-continue {
+            background: var(--adhoc-color);
+        }
+
+        .form-card.adhoc .btn-continue:hover {
+            background: var(--adhoc-light);
         }
 
         /* Button */
@@ -710,7 +799,7 @@
                     <div class="status-row">
                         <span class="status-badge draft">
                             <span class="status-dot"></span>
-                            In progress
+                            Draft
                         </span>
                     </div>
                     <p class="draft-message">
